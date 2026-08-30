@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_raw_material_shortage_list" model="ir.ui.view">
+        <field name="name">raw.material.shortage.list</field>
+        <field name="model">raw.material.shortage</field>
+        <field name="arch" type="xml">
+            <list create="false" string="Дефицит сырья">
+                <field name="product_id"/>
+                <field name="qty_on_hand"/>
+                <field name="qty_required"/>
+                <field name="qty_to_order"/>
+                <button name="action_order" type="object"
+                        string="Заказать" class="btn-primary"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Серверное действие: пересчитать дефицит и открыть список -->
+    <record id="action_raw_material_shortage_open" model="ir.actions.server">
+        <field name="name">Дефицит сырья</field>
+        <field name="model_id" ref="model_raw_material_shortage"/>
+        <field name="state">code</field>
+        <field name="code">
+model.action_recompute()
+action = {
+    'type': 'ir.actions.act_window',
+    'name': 'Дефицит сырья',
+    'res_model': 'raw.material.shortage',
+    'view_mode': 'list',
+}
+        </field>
+    </record>
+
+    <menuitem id="menu_raw_material_shortage"
+              name="Дефицит сырья"
+              parent="purchase.menu_purchase_root"
+              action="action_raw_material_shortage_open"
+              sequence="90"/>
+
+</odoo>
