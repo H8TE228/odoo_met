@@ -7,11 +7,13 @@
         <field name="inherit_id" ref="purchase.purchase_order_form"/>
         <field name="arch" type="xml">
 
-            <!-- Кнопка "Обновить график" в шапке, только у подтверждённого заказа -->
             <xpath expr="//header" position="inside">
                 <button name="action_update_schedule" type="object"
                         string="Обновить график"
                         class="btn-primary"
+                        invisible="state not in ('purchase', 'done')"/>
+                <button name="action_create_return" type="object"
+                        string="Оформить возврат"
                         invisible="state not in ('purchase', 'done')"/>
             </xpath>
 
